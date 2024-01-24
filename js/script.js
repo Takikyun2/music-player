@@ -230,27 +230,3 @@ function secondsForMinutes(seconds) {
 
     return areaMinutes + ":" + areaSeconds;
 }
-
-
-
-/* if (music.ended == true) {
-    if (randomBtn.classList.contains("random-active") == true) {
-        indexMusic = parseInt(Math.random() * musics.length)
-    }
-    else {
-        indexMusic++;
-    }
-
-    if (loopBtn.classList.contains("loop-active") == true) {
-        indexMusic--;
-    }
-
-    if (indexMusic >= musics.length) {
-        indexMusic = 0
-    }
-
-    playBtn.classList.add("hide");
-    pauseBtn.classList.remove("hide");
-    renderMusic(indexMusic);
-    music.play();
-} */
