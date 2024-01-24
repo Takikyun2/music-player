@@ -75,6 +75,7 @@ let previousBtn = document.querySelector("#previous-btn");
 let nextBtn = document.querySelector("#next-btn");
 let randomBtn = document.querySelector(".random-btn")
 let loopBtn = document.querySelector(".loop-btn")
+let point = document.querySelector(".point")
 //tempos
 
 //tempo atual
@@ -157,15 +158,6 @@ nextBtn.addEventListener("click", () => {
     music.play();
 });
 
-// musica aleatoria
-
-/*randomBtn.addEventListener("click", () => {
-    indexMusic = parseInt(Math.random() * musics.length)
-    playBtn.classList.add("hide");
-    pauseBtn.classList.remove("hide");
-    renderMusic(indexMusic);
-    music.play(); 
-}) */
 
 // funcao de renderizar musica, img, titulo, e autor
 
@@ -185,20 +177,46 @@ let progressBar = document.querySelector(".progress-bar")
 let progress = document.querySelector(".progress");
 let timeNow = document.querySelector(".start");
 
+// progressbar no clique
+
+progressBar.onclick = (e) => {
+    let tap = (e.offsetX / progressBar.offsetWidth) * music.duration;
+    music.currentTime = tap;
+}
+
+point.drag = (e) => {
+    let drag = (e.offsetX / progressBar.offsetWidth) * music.duration;
+    music.currentTime = drag;
+}
+
 function timeDuration() {
     // equacao para tranformar o tempo de segundos para minutos
 
     progress.style.width = Math.floor((music.currentTime / music.duration) * 100) + "%";
     timeNow.textContent = secondsForMinutes(Math.floor(music.currentTime));
 
+    if (music.ended == true) {
+        if (randomBtn.classList.contains("random-active") == true) {
+            indexMusic = parseInt(Math.random() * musics.length)
+        }
+        else {
+            indexMusic++;
+        }
 
-}
+        if (loopBtn.classList.contains("loop-active") == true) {
+            indexMusic--;
+        }
 
-// progressbar no clique
+        if (indexMusic >= musics.length) {
+            indexMusic = 0
+        }
 
-progressBar.onclick = (e) => {
-    let tap = (e.offsetX / progressBar.offsetWidth) * music.duration;
-    music.currentTime = tap;
+        playBtn.classList.add("hide");
+        pauseBtn.classList.remove("hide");
+        renderMusic(indexMusic);
+        music.play();
+    }
+
 }
 
 //funcao de transformar segundos em minutos
@@ -213,8 +231,26 @@ function secondsForMinutes(seconds) {
     return areaMinutes + ":" + areaSeconds;
 }
 
-if (music.currentTime == music.duration) {
-    indexMusic++;
+
+
+/* if (music.ended == true) {
+    if (randomBtn.classList.contains("random-active") == true) {
+        indexMusic = parseInt(Math.random() * musics.length)
+    }
+    else {
+        indexMusic++;
+    }
+
+    if (loopBtn.classList.contains("loop-active") == true) {
+        indexMusic--;
+    }
+
+    if (indexMusic >= musics.length) {
+        indexMusic = 0
+    }
+
+    playBtn.classList.add("hide");
+    pauseBtn.classList.remove("hide");
     renderMusic(indexMusic);
     music.play();
-}
+} */
